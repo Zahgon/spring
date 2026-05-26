@@ -16,7 +16,6 @@
 package org.mybatis.spring;
 
 import static org.springframework.util.Assert.notNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
@@ -32,58 +31,54 @@ import org.springframework.transaction.support.ResourceHolderSupport;
  */
 public final class SqlSessionHolder extends ResourceHolderSupport {
 
-  private final SqlSession sqlSession;
+    private final SqlSession sqlSession;
 
-  private final ExecutorType executorType;
+    private final ExecutorType executorType;
 
-  private final PersistenceExceptionTranslator exceptionTranslator;
+    private final PersistenceExceptionTranslator exceptionTranslator;
 
-  /**
-   * Creates a new holder instance.
-   *
-   * @param sqlSession
-   *          the {@code SqlSession} has to be hold.
-   * @param executorType
-   *          the {@code ExecutorType} has to be hold.
-   * @param exceptionTranslator
-   *          the {@code PersistenceExceptionTranslator} has to be hold.
-   */
-  public SqlSessionHolder(SqlSession sqlSession, ExecutorType executorType,
-      PersistenceExceptionTranslator exceptionTranslator) {
+    /**
+     * Creates a new holder instance.
+     *
+     * @param sqlSession
+     *          the {@code SqlSession} has to be hold.
+     * @param executorType
+     *          the {@code ExecutorType} has to be hold.
+     * @param exceptionTranslator
+     *          the {@code PersistenceExceptionTranslator} has to be hold.
+     */
+    public SqlSessionHolder(SqlSession sqlSession, ExecutorType executorType, PersistenceExceptionTranslator exceptionTranslator) {
+        notNull(sqlSession, "SqlSession must not be null");
+        notNull(executorType, "ExecutorType must not be null");
+        this.sqlSession = sqlSession;
+        this.executorType = executorType;
+        this.exceptionTranslator = exceptionTranslator;
+    }
 
-    notNull(sqlSession, "SqlSession must not be null");
-    notNull(executorType, "ExecutorType must not be null");
+    /**
+     * Gets the sql session.
+     *
+     * @return the sql session
+     */
+    public SqlSession getSqlSession() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-    this.sqlSession = sqlSession;
-    this.executorType = executorType;
-    this.exceptionTranslator = exceptionTranslator;
-  }
+    /**
+     * Gets the executor type.
+     *
+     * @return the executor type
+     */
+    public ExecutorType getExecutorType() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * Gets the sql session.
-   *
-   * @return the sql session
-   */
-  public SqlSession getSqlSession() {
-    return sqlSession;
-  }
-
-  /**
-   * Gets the executor type.
-   *
-   * @return the executor type
-   */
-  public ExecutorType getExecutorType() {
-    return executorType;
-  }
-
-  /**
-   * Gets the persistence exception translator.
-   *
-   * @return the persistence exception translator
-   */
-  public PersistenceExceptionTranslator getPersistenceExceptionTranslator() {
-    return exceptionTranslator;
-  }
-
+    /**
+     * Gets the persistence exception translator.
+     *
+     * @return the persistence exception translator
+     */
+    public PersistenceExceptionTranslator getPersistenceExceptionTranslator() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

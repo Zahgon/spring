@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.mybatis.spring.mapper.ClassPathMapperScanner;
 import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -50,98 +49,53 @@ import org.w3c.dom.Node;
  */
 public class MapperScannerBeanDefinitionParser extends AbstractBeanDefinitionParser {
 
-  private static final String ATTRIBUTE_BASE_PACKAGE = "base-package";
-  private static final String ATTRIBUTE_ANNOTATION = "annotation";
-  private static final String ATTRIBUTE_MARKER_INTERFACE = "marker-interface";
-  private static final String ATTRIBUTE_NAME_GENERATOR = "name-generator";
-  private static final String ATTRIBUTE_TEMPLATE_REF = "template-ref";
-  private static final String ATTRIBUTE_FACTORY_REF = "factory-ref";
-  private static final String ATTRIBUTE_MAPPER_FACTORY_BEAN_CLASS = "mapper-factory-bean-class";
-  private static final String ATTRIBUTE_LAZY_INITIALIZATION = "lazy-initialization";
-  private static final String ATTRIBUTE_DEFAULT_SCOPE = "default-scope";
-  private static final String ATTRIBUTE_PROCESS_PROPERTY_PLACEHOLDERS = "process-property-placeholders";
-  private static final String ATTRIBUTE_EXCLUDE_FILTER = "exclude-filter";
+    private static final String ATTRIBUTE_BASE_PACKAGE = "base-package";
 
-  @Override
-  protected AbstractBeanDefinition parseInternal(Element element, ParserContext parserContext) {
-    var builder = BeanDefinitionBuilder.genericBeanDefinition(MapperScannerConfigurer.class);
+    private static final String ATTRIBUTE_ANNOTATION = "annotation";
 
-    var classLoader = ClassUtils.getDefaultClassLoader();
+    private static final String ATTRIBUTE_MARKER_INTERFACE = "marker-interface";
 
-    var processPropertyPlaceHolders = element.getAttribute(ATTRIBUTE_PROCESS_PROPERTY_PLACEHOLDERS);
-    builder.addPropertyValue("processPropertyPlaceHolders",
-        !StringUtils.hasText(processPropertyPlaceHolders) || Boolean.parseBoolean(processPropertyPlaceHolders));
-    try {
-      var annotationClassName = element.getAttribute(ATTRIBUTE_ANNOTATION);
-      if (StringUtils.hasText(annotationClassName)) {
-        @SuppressWarnings("unchecked")
-        Class<? extends Annotation> annotationClass = (Class<? extends Annotation>) classLoader
-            .loadClass(annotationClassName);
-        builder.addPropertyValue("annotationClass", annotationClass);
-      }
-      var markerInterfaceClassName = element.getAttribute(ATTRIBUTE_MARKER_INTERFACE);
-      if (StringUtils.hasText(markerInterfaceClassName)) {
-        Class<?> markerInterface = classLoader.loadClass(markerInterfaceClassName);
-        builder.addPropertyValue("markerInterface", markerInterface);
-      }
-      var nameGeneratorClassName = element.getAttribute(ATTRIBUTE_NAME_GENERATOR);
-      if (StringUtils.hasText(nameGeneratorClassName)) {
-        Class<?> nameGeneratorClass = classLoader.loadClass(nameGeneratorClassName);
-        var nameGenerator = BeanUtils.instantiateClass(nameGeneratorClass, BeanNameGenerator.class);
-        builder.addPropertyValue("nameGenerator", nameGenerator);
-      }
-      var mapperFactoryBeanClassName = element.getAttribute(ATTRIBUTE_MAPPER_FACTORY_BEAN_CLASS);
-      if (StringUtils.hasText(mapperFactoryBeanClassName)) {
-        @SuppressWarnings("unchecked")
-        Class<? extends MapperFactoryBean> mapperFactoryBeanClass = (Class<? extends MapperFactoryBean>) classLoader
-            .loadClass(mapperFactoryBeanClassName);
-        builder.addPropertyValue("mapperFactoryBeanClass", mapperFactoryBeanClass);
-      }
+    private static final String ATTRIBUTE_NAME_GENERATOR = "name-generator";
 
-      // parse raw exclude-filter in <mybatis:scan>
-      var rawExcludeFilters = parseScanTypeFilters(element, parserContext);
-      if (!rawExcludeFilters.isEmpty()) {
-        builder.addPropertyValue("rawExcludeFilters", rawExcludeFilters);
-      }
+    private static final String ATTRIBUTE_TEMPLATE_REF = "template-ref";
 
-    } catch (Exception ex) {
-      var readerContext = parserContext.getReaderContext();
-      readerContext.error(ex.getMessage(), readerContext.extractSource(element), ex.getCause());
+    private static final String ATTRIBUTE_FACTORY_REF = "factory-ref";
+
+    private static final String ATTRIBUTE_MAPPER_FACTORY_BEAN_CLASS = "mapper-factory-bean-class";
+
+    private static final String ATTRIBUTE_LAZY_INITIALIZATION = "lazy-initialization";
+
+    private static final String ATTRIBUTE_DEFAULT_SCOPE = "default-scope";
+
+    private static final String ATTRIBUTE_PROCESS_PROPERTY_PLACEHOLDERS = "process-property-placeholders";
+
+    private static final String ATTRIBUTE_EXCLUDE_FILTER = "exclude-filter";
+
+    @Override
+    protected AbstractBeanDefinition parseInternal(Element element, ParserContext parserContext) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    builder.addPropertyValue("sqlSessionTemplateBeanName", element.getAttribute(ATTRIBUTE_TEMPLATE_REF));
-    builder.addPropertyValue("sqlSessionFactoryBeanName", element.getAttribute(ATTRIBUTE_FACTORY_REF));
-    builder.addPropertyValue("lazyInitialization", element.getAttribute(ATTRIBUTE_LAZY_INITIALIZATION));
-    builder.addPropertyValue("defaultScope", element.getAttribute(ATTRIBUTE_DEFAULT_SCOPE));
-    builder.addPropertyValue("basePackage", element.getAttribute(ATTRIBUTE_BASE_PACKAGE));
-
-    // for spring-native
-    builder.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
-
-    return builder.getBeanDefinition();
-  }
-
-  private List<Map<String, String>> parseScanTypeFilters(Element element, ParserContext parserContext) {
-    List<Map<String, String>> typeFilters = new ArrayList<>();
-    var nodeList = element.getChildNodes();
-    for (var i = 0; i < nodeList.getLength(); i++) {
-      var node = nodeList.item(i);
-      if (Node.ELEMENT_NODE == node.getNodeType()) {
-        var localName = parserContext.getDelegate().getLocalName(node);
-        if (ATTRIBUTE_EXCLUDE_FILTER.equals(localName)) {
-          Map<String, String> filter = new HashMap<>(16);
-          filter.put("type", ((Element) node).getAttribute("type"));
-          filter.put("expression", ((Element) node).getAttribute("expression"));
-          typeFilters.add(filter);
+    private List<Map<String, String>> parseScanTypeFilters(Element element, ParserContext parserContext) {
+        List<Map<String, String>> typeFilters = new ArrayList<>();
+        var nodeList = element.getChildNodes();
+        for (var i = 0; i < nodeList.getLength(); i++) {
+            var node = nodeList.item(i);
+            if (Node.ELEMENT_NODE == node.getNodeType()) {
+                var localName = parserContext.getDelegate().getLocalName(node);
+                if (ATTRIBUTE_EXCLUDE_FILTER.equals(localName)) {
+                    Map<String, String> filter = new HashMap<>(16);
+                    filter.put("type", ((Element) node).getAttribute("type"));
+                    filter.put("expression", ((Element) node).getAttribute("expression"));
+                    typeFilters.add(filter);
+                }
+            }
         }
-      }
+        return typeFilters;
     }
-    return typeFilters;
-  }
 
-  @Override
-  protected boolean shouldGenerateIdAsFallback() {
-    return true;
-  }
-
+    @Override
+    protected boolean shouldGenerateIdAsFallback() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

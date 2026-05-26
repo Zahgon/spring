@@ -16,7 +16,6 @@
 package org.mybatis.spring.batch.builder;
 
 import java.util.Optional;
-
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
@@ -36,100 +35,92 @@ import org.springframework.core.convert.converter.Converter;
  */
 public class MyBatisBatchItemWriterBuilder<T> {
 
-  private SqlSessionTemplate sqlSessionTemplate;
-  private SqlSessionFactory sqlSessionFactory;
-  private String statementId;
-  private Boolean assertUpdates;
-  private Converter<T, ?> itemToParameterConverter;
+    private SqlSessionTemplate sqlSessionTemplate;
 
-  /**
-   * Set the {@link SqlSessionTemplate} to be used by writer for database access.
-   *
-   * @param sqlSessionTemplate
-   *          the {@link SqlSessionTemplate} to be used by writer for database access
-   *
-   * @return this instance for method chaining
-   *
-   * @see MyBatisBatchItemWriter#setSqlSessionTemplate(SqlSessionTemplate)
-   */
-  public MyBatisBatchItemWriterBuilder<T> sqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-    this.sqlSessionTemplate = sqlSessionTemplate;
-    return this;
-  }
+    private SqlSessionFactory sqlSessionFactory;
 
-  /**
-   * Set the {@link SqlSessionFactory} to be used by writer for database access.
-   *
-   * @param sqlSessionFactory
-   *          the {@link SqlSessionFactory} to be used by writer for database access
-   *
-   * @return this instance for method chaining
-   *
-   * @see MyBatisBatchItemWriter#setSqlSessionFactory(SqlSessionFactory)
-   */
-  public MyBatisBatchItemWriterBuilder<T> sqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-    this.sqlSessionFactory = sqlSessionFactory;
-    return this;
-  }
+    private String statementId;
 
-  /**
-   * Set the statement id identifying the statement in the SqlMap configuration file.
-   *
-   * @param statementId
-   *          the id for the statement
-   *
-   * @return this instance for method chaining
-   *
-   * @see MyBatisBatchItemWriter#setStatementId(String)
-   */
-  public MyBatisBatchItemWriterBuilder<T> statementId(String statementId) {
-    this.statementId = statementId;
-    return this;
-  }
+    private Boolean assertUpdates;
 
-  /**
-   * The flag that determines whether an assertion is made that all items cause at least one row to be updated.
-   *
-   * @param assertUpdates
-   *          the flag to set. Defaults to true
-   *
-   * @return this instance for method chaining
-   *
-   * @see MyBatisBatchItemWriter#setAssertUpdates(boolean)
-   */
-  public MyBatisBatchItemWriterBuilder<T> assertUpdates(boolean assertUpdates) {
-    this.assertUpdates = assertUpdates;
-    return this;
-  }
+    private Converter<T, ?> itemToParameterConverter;
 
-  /**
-   * Set a converter that converting item to parameter object.
-   *
-   * @param itemToParameterConverter
-   *          a converter that converting item to parameter object
-   *
-   * @return this instance for method chaining
-   *
-   * @see MyBatisBatchItemWriter#setItemToParameterConverter(Converter)
-   */
-  public MyBatisBatchItemWriterBuilder<T> itemToParameterConverter(Converter<T, ?> itemToParameterConverter) {
-    this.itemToParameterConverter = itemToParameterConverter;
-    return this;
-  }
+    /**
+     * Set the {@link SqlSessionTemplate} to be used by writer for database access.
+     *
+     * @param sqlSessionTemplate
+     *          the {@link SqlSessionTemplate} to be used by writer for database access
+     *
+     * @return this instance for method chaining
+     *
+     * @see MyBatisBatchItemWriter#setSqlSessionTemplate(SqlSessionTemplate)
+     */
+    public MyBatisBatchItemWriterBuilder<T> sqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * Returns a fully built {@link MyBatisBatchItemWriter}.
-   *
-   * @return the writer
-   */
-  public MyBatisBatchItemWriter<T> build() {
-    var writer = new MyBatisBatchItemWriter<T>();
-    writer.setSqlSessionTemplate(this.sqlSessionTemplate);
-    writer.setSqlSessionFactory(this.sqlSessionFactory);
-    writer.setStatementId(this.statementId);
-    Optional.ofNullable(this.assertUpdates).ifPresent(writer::setAssertUpdates);
-    Optional.ofNullable(this.itemToParameterConverter).ifPresent(writer::setItemToParameterConverter);
-    return writer;
-  }
+    /**
+     * Set the {@link SqlSessionFactory} to be used by writer for database access.
+     *
+     * @param sqlSessionFactory
+     *          the {@link SqlSessionFactory} to be used by writer for database access
+     *
+     * @return this instance for method chaining
+     *
+     * @see MyBatisBatchItemWriter#setSqlSessionFactory(SqlSessionFactory)
+     */
+    public MyBatisBatchItemWriterBuilder<T> sqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
+    /**
+     * Set the statement id identifying the statement in the SqlMap configuration file.
+     *
+     * @param statementId
+     *          the id for the statement
+     *
+     * @return this instance for method chaining
+     *
+     * @see MyBatisBatchItemWriter#setStatementId(String)
+     */
+    public MyBatisBatchItemWriterBuilder<T> statementId(String statementId) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * The flag that determines whether an assertion is made that all items cause at least one row to be updated.
+     *
+     * @param assertUpdates
+     *          the flag to set. Defaults to true
+     *
+     * @return this instance for method chaining
+     *
+     * @see MyBatisBatchItemWriter#setAssertUpdates(boolean)
+     */
+    public MyBatisBatchItemWriterBuilder<T> assertUpdates(boolean assertUpdates) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Set a converter that converting item to parameter object.
+     *
+     * @param itemToParameterConverter
+     *          a converter that converting item to parameter object
+     *
+     * @return this instance for method chaining
+     *
+     * @see MyBatisBatchItemWriter#setItemToParameterConverter(Converter)
+     */
+    public MyBatisBatchItemWriterBuilder<T> itemToParameterConverter(Converter<T, ?> itemToParameterConverter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Returns a fully built {@link MyBatisBatchItemWriter}.
+     *
+     * @return the writer
+     */
+    public MyBatisBatchItemWriter<T> build() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

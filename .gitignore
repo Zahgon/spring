@@ -10,3 +10,8 @@
 release.properties
 *.releaseBackup
 .github/keys/
+
+.aider*
+logs/
+.commit0_scripts/
+.github/workflows/

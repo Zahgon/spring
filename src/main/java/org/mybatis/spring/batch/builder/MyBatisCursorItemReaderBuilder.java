@@ -18,7 +18,6 @@ package org.mybatis.spring.batch.builder;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
-
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisCursorItemReader;
 
@@ -36,121 +35,111 @@ import org.mybatis.spring.batch.MyBatisCursorItemReader;
  */
 public class MyBatisCursorItemReaderBuilder<T> {
 
-  private SqlSessionFactory sqlSessionFactory;
-  private String queryId;
-  private Map<String, Object> parameterValues;
-  private Supplier<Map<String, Object>> parameterValuesSupplier;
-  private Boolean saveState;
-  private Integer maxItemCount;
+    private SqlSessionFactory sqlSessionFactory;
 
-  /**
-   * Set the {@link SqlSessionFactory} to be used by reader for database access.
-   *
-   * @param sqlSessionFactory
-   *          the {@link SqlSessionFactory} to be used by writer for database access
-   *
-   * @return this instance for method chaining
-   *
-   * @see MyBatisCursorItemReader#setSqlSessionFactory(SqlSessionFactory)
-   */
-  public MyBatisCursorItemReaderBuilder<T> sqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-    this.sqlSessionFactory = sqlSessionFactory;
-    return this;
-  }
+    private String queryId;
 
-  /**
-   * Set the query id identifying the statement in the SqlMap configuration file.
-   *
-   * @param queryId
-   *          the id for the query
-   *
-   * @return this instance for method chaining
-   *
-   * @see MyBatisCursorItemReader#setQueryId(String)
-   */
-  public MyBatisCursorItemReaderBuilder<T> queryId(String queryId) {
-    this.queryId = queryId;
-    return this;
-  }
+    private Map<String, Object> parameterValues;
 
-  /**
-   * Set the parameter values to be used for the query execution.
-   *
-   * @param parameterValues
-   *          the parameter values to be used for the query execution
-   *
-   * @return this instance for method chaining
-   *
-   * @see MyBatisCursorItemReader#setParameterValues(Map)
-   */
-  public MyBatisCursorItemReaderBuilder<T> parameterValues(Map<String, Object> parameterValues) {
-    this.parameterValues = parameterValues;
-    return this;
-  }
+    private Supplier<Map<String, Object>> parameterValuesSupplier;
 
-  /**
-   * Set the parameter supplier to be used to get parameters for the query execution.
-   *
-   * @param parameterValuesSupplier
-   *          the parameter supplier to be used to get parameters for the query execution
-   *
-   * @return this instance for method chaining
-   *
-   * @see MyBatisCursorItemReader#setParameterValuesSupplier(Supplier)
-   *
-   * @since 2.1.0
-   */
-  public MyBatisCursorItemReaderBuilder<T> parameterValuesSupplier(
-      Supplier<Map<String, Object>> parameterValuesSupplier) {
-    this.parameterValuesSupplier = parameterValuesSupplier;
-    return this;
-  }
+    private Boolean saveState;
 
-  /**
-   * Configure if the state of the {@link org.springframework.batch.infrastructure.item.ItemStreamSupport} should be
-   * persisted within the {@link org.springframework.batch.infrastructure.item.ExecutionContext} for restart purposes.
-   *
-   * @param saveState
-   *          defaults to true
-   *
-   * @return The current instance of the builder.
-   *
-   * @see org.springframework.batch.infrastructure.item.support.AbstractItemCountingItemStreamItemReader#setSaveState(boolean)
-   */
-  public MyBatisCursorItemReaderBuilder<T> saveState(boolean saveState) {
-    this.saveState = saveState;
-    return this;
-  }
+    private Integer maxItemCount;
 
-  /**
-   * Configure the max number of items to be read.
-   *
-   * @param maxItemCount
-   *          the max items to be read
-   *
-   * @return The current instance of the builder.
-   *
-   * @see org.springframework.batch.infrastructure.item.support.AbstractItemCountingItemStreamItemReader#setMaxItemCount(int)
-   */
-  public MyBatisCursorItemReaderBuilder<T> maxItemCount(int maxItemCount) {
-    this.maxItemCount = maxItemCount;
-    return this;
-  }
+    /**
+     * Set the {@link SqlSessionFactory} to be used by reader for database access.
+     *
+     * @param sqlSessionFactory
+     *          the {@link SqlSessionFactory} to be used by writer for database access
+     *
+     * @return this instance for method chaining
+     *
+     * @see MyBatisCursorItemReader#setSqlSessionFactory(SqlSessionFactory)
+     */
+    public MyBatisCursorItemReaderBuilder<T> sqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * Returns a fully built {@link MyBatisCursorItemReader}.
-   *
-   * @return the reader
-   */
-  public MyBatisCursorItemReader<T> build() {
-    var reader = new MyBatisCursorItemReader<T>();
-    reader.setSqlSessionFactory(this.sqlSessionFactory);
-    reader.setQueryId(this.queryId);
-    reader.setParameterValues(this.parameterValues);
-    reader.setParameterValuesSupplier(this.parameterValuesSupplier);
-    Optional.ofNullable(this.saveState).ifPresent(reader::setSaveState);
-    Optional.ofNullable(this.maxItemCount).ifPresent(reader::setMaxItemCount);
-    return reader;
-  }
+    /**
+     * Set the query id identifying the statement in the SqlMap configuration file.
+     *
+     * @param queryId
+     *          the id for the query
+     *
+     * @return this instance for method chaining
+     *
+     * @see MyBatisCursorItemReader#setQueryId(String)
+     */
+    public MyBatisCursorItemReaderBuilder<T> queryId(String queryId) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
+    /**
+     * Set the parameter values to be used for the query execution.
+     *
+     * @param parameterValues
+     *          the parameter values to be used for the query execution
+     *
+     * @return this instance for method chaining
+     *
+     * @see MyBatisCursorItemReader#setParameterValues(Map)
+     */
+    public MyBatisCursorItemReaderBuilder<T> parameterValues(Map<String, Object> parameterValues) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Set the parameter supplier to be used to get parameters for the query execution.
+     *
+     * @param parameterValuesSupplier
+     *          the parameter supplier to be used to get parameters for the query execution
+     *
+     * @return this instance for method chaining
+     *
+     * @see MyBatisCursorItemReader#setParameterValuesSupplier(Supplier)
+     *
+     * @since 2.1.0
+     */
+    public MyBatisCursorItemReaderBuilder<T> parameterValuesSupplier(Supplier<Map<String, Object>> parameterValuesSupplier) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Configure if the state of the {@link org.springframework.batch.infrastructure.item.ItemStreamSupport} should be
+     * persisted within the {@link org.springframework.batch.infrastructure.item.ExecutionContext} for restart purposes.
+     *
+     * @param saveState
+     *          defaults to true
+     *
+     * @return The current instance of the builder.
+     *
+     * @see org.springframework.batch.infrastructure.item.support.AbstractItemCountingItemStreamItemReader#setSaveState(boolean)
+     */
+    public MyBatisCursorItemReaderBuilder<T> saveState(boolean saveState) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Configure the max number of items to be read.
+     *
+     * @param maxItemCount
+     *          the max items to be read
+     *
+     * @return The current instance of the builder.
+     *
+     * @see org.springframework.batch.infrastructure.item.support.AbstractItemCountingItemStreamItemReader#setMaxItemCount(int)
+     */
+    public MyBatisCursorItemReaderBuilder<T> maxItemCount(int maxItemCount) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Returns a fully built {@link MyBatisCursorItemReader}.
+     *
+     * @return the reader
+     */
+    public MyBatisCursorItemReader<T> build() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

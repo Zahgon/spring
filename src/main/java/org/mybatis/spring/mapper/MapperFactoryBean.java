@@ -16,7 +16,6 @@
 package org.mybatis.spring.mapper;
 
 import static org.springframework.util.Assert.notNull;
-
 import org.apache.ibatis.executor.ErrorContext;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -55,103 +54,88 @@ import org.springframework.beans.factory.FactoryBean;
  */
 public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements FactoryBean<T> {
 
-  private Class<T> mapperInterface;
+    private Class<T> mapperInterface;
 
-  private boolean addToConfig = true;
+    private boolean addToConfig = true;
 
-  /**
-   * Instantiates a new mapper factory bean.
-   */
-  public MapperFactoryBean() {
-    // intentionally empty
-  }
-
-  /**
-   * Instantiates a new mapper factory bean.
-   *
-   * @param mapperInterface
-   *          the mapper interface
-   */
-  public MapperFactoryBean(Class<T> mapperInterface) {
-    this.mapperInterface = mapperInterface;
-  }
-
-  @Override
-  protected void checkDaoConfig() {
-    super.checkDaoConfig();
-
-    notNull(this.mapperInterface, "Property 'mapperInterface' is required");
-
-    var configuration = getSqlSession().getConfiguration();
-    if (this.addToConfig && !configuration.hasMapper(this.mapperInterface)) {
-      try {
-        configuration.addMapper(this.mapperInterface);
-      } catch (Exception e) {
-        logger.error("Error while adding the mapper '" + this.mapperInterface + "' to configuration.", e);
-        throw new IllegalArgumentException(e);
-      } finally {
-        ErrorContext.instance().reset();
-      }
+    /**
+     * Instantiates a new mapper factory bean.
+     */
+    public MapperFactoryBean() {
+        // intentionally empty
     }
-  }
 
-  @Override
-  public T getObject() throws Exception {
-    return getSqlSession().getMapper(this.mapperInterface);
-  }
+    /**
+     * Instantiates a new mapper factory bean.
+     *
+     * @param mapperInterface
+     *          the mapper interface
+     */
+    public MapperFactoryBean(Class<T> mapperInterface) {
+        this.mapperInterface = mapperInterface;
+    }
 
-  @Override
-  public Class<T> getObjectType() {
-    return this.mapperInterface;
-  }
+    @Override
+    protected void checkDaoConfig() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean isSingleton() {
-    return true;
-  }
+    @Override
+    public T getObject() throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  // ------------- mutators --------------
+    @Override
+    public Class<T> getObjectType() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * Sets the mapper interface of the MyBatis mapper
-   *
-   * @param mapperInterface
-   *          class of the interface
-   */
-  public void setMapperInterface(Class<T> mapperInterface) {
-    this.mapperInterface = mapperInterface;
-  }
+    @Override
+    public boolean isSingleton() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * Return the mapper interface of the MyBatis mapper
-   *
-   * @return class of the interface
-   */
-  public Class<T> getMapperInterface() {
-    return mapperInterface;
-  }
+    // ------------- mutators --------------
+    /**
+     * Sets the mapper interface of the MyBatis mapper
+     *
+     * @param mapperInterface
+     *          class of the interface
+     */
+    public void setMapperInterface(Class<T> mapperInterface) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * If addToConfig is false the mapper will not be added to MyBatis. This means it must have been included in
-   * mybatis-config.xml.
-   * <p>
-   * If it is true, the mapper will be added to MyBatis in the case it is not already registered.
-   * <p>
-   * By default addToConfig is true.
-   *
-   * @param addToConfig
-   *          a flag that whether add mapper to MyBatis or not
-   */
-  public void setAddToConfig(boolean addToConfig) {
-    this.addToConfig = addToConfig;
-  }
+    /**
+     * Return the mapper interface of the MyBatis mapper
+     *
+     * @return class of the interface
+     */
+    public Class<T> getMapperInterface() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * Return the flag for addition into MyBatis config.
-   *
-   * @return true if the mapper will be added to MyBatis in the case it is not already registered.
-   */
-  public boolean isAddToConfig() {
-    return addToConfig;
-  }
+    /**
+     * If addToConfig is false the mapper will not be added to MyBatis. This means it must have been included in
+     * mybatis-config.xml.
+     * <p>
+     * If it is true, the mapper will be added to MyBatis in the case it is not already registered.
+     * <p>
+     * By default addToConfig is true.
+     *
+     * @param addToConfig
+     *          a flag that whether add mapper to MyBatis or not
+     */
+    public void setAddToConfig(boolean addToConfig) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Return the flag for addition into MyBatis config.
+     *
+     * @return true if the mapper will be added to MyBatis in the case it is not already registered.
+     */
+    public boolean isAddToConfig() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

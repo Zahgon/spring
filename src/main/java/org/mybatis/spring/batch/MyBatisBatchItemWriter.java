@@ -17,7 +17,6 @@ package org.mybatis.spring.batch;
 
 import static org.springframework.util.Assert.isTrue;
 import static org.springframework.util.Assert.notNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -54,123 +53,89 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException;
  */
 public class MyBatisBatchItemWriter<T> implements ItemWriter<T>, InitializingBean {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(MyBatisBatchItemWriter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyBatisBatchItemWriter.class);
 
-  private SqlSessionTemplate sqlSessionTemplate;
+    private SqlSessionTemplate sqlSessionTemplate;
 
-  private String statementId;
+    private String statementId;
 
-  private boolean assertUpdates = true;
+    private boolean assertUpdates = true;
 
-  private Converter<T, ?> itemToParameterConverter = new PassThroughConverter<>();
+    private Converter<T, ?> itemToParameterConverter = new PassThroughConverter<>();
 
-  /**
-   * Public setter for the flag that determines whether an assertion is made that number of BatchResult objects returned
-   * is one and all items cause at least one row to be updated.
-   *
-   * @param assertUpdates
-   *          the flag to set. Defaults to true;
-   */
-  public void setAssertUpdates(boolean assertUpdates) {
-    this.assertUpdates = assertUpdates;
-  }
-
-  /**
-   * Public setter for {@link SqlSessionFactory} for injection purposes.
-   *
-   * @param sqlSessionFactory
-   *          a factory object for the {@link SqlSession}.
-   */
-  public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-    if (sqlSessionTemplate == null) {
-      this.sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory, ExecutorType.BATCH);
+    /**
+     * Public setter for the flag that determines whether an assertion is made that number of BatchResult objects returned
+     * is one and all items cause at least one row to be updated.
+     *
+     * @param assertUpdates
+     *          the flag to set. Defaults to true;
+     */
+    public void setAssertUpdates(boolean assertUpdates) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-  }
 
-  /**
-   * Public setter for the {@link SqlSessionTemplate}.
-   *
-   * @param sqlSessionTemplate
-   *          a template object for use the {@link SqlSession} on the Spring managed transaction
-   */
-  public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-    this.sqlSessionTemplate = sqlSessionTemplate;
-  }
-
-  /**
-   * Public setter for the statement id identifying the statement in the SqlMap configuration file.
-   *
-   * @param statementId
-   *          the id for the statement
-   */
-  public void setStatementId(String statementId) {
-    this.statementId = statementId;
-  }
-
-  /**
-   * Public setter for a converter that converting item to parameter object.
-   * <p>
-   * By default implementation, an item does not convert.
-   *
-   * @param itemToParameterConverter
-   *          a converter that converting item to parameter object
-   *
-   * @since 2.0.0
-   */
-  public void setItemToParameterConverter(Converter<T, ?> itemToParameterConverter) {
-    this.itemToParameterConverter = itemToParameterConverter;
-  }
-
-  /**
-   * Check mandatory properties - there must be an SqlSession and a statementId.
-   */
-  @Override
-  public void afterPropertiesSet() {
-    notNull(sqlSessionTemplate, "A SqlSessionFactory or a SqlSessionTemplate is required.");
-    isTrue(ExecutorType.BATCH == sqlSessionTemplate.getExecutorType(),
-        "SqlSessionTemplate's executor type must be BATCH");
-    notNull(statementId, "A statementId is required.");
-    notNull(itemToParameterConverter, "A itemToParameterConverter is required.");
-  }
-
-  @Override
-  public void write(final Chunk<? extends T> items) {
-
-    if (!items.isEmpty()) {
-      LOGGER.debug(() -> "Executing batch with " + items.size() + " items.");
-
-      for (T item : items) {
-        sqlSessionTemplate.update(statementId, itemToParameterConverter.convert(item));
-      }
-
-      var results = sqlSessionTemplate.flushStatements();
-
-      if (assertUpdates) {
-        if (results.size() != 1) {
-          throw new InvalidDataAccessResourceUsageException("Batch execution returned invalid results. "
-              + "Expected 1 but number of BatchResult objects returned was " + results.size());
-        }
-
-        var updateCounts = results.get(0).getUpdateCounts();
-
-        for (var i = 0; i < updateCounts.length; i++) {
-          var value = updateCounts[i];
-          if (value == 0) {
-            throw new EmptyResultDataAccessException("Item " + i + " of " + updateCounts.length
-                + " did not update any rows: [" + items.getItems().get(i) + "]", 1);
-          }
-        }
-      }
+    /**
+     * Public setter for {@link SqlSessionFactory} for injection purposes.
+     *
+     * @param sqlSessionFactory
+     *          a factory object for the {@link SqlSession}.
+     */
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-  }
 
-  private static class PassThroughConverter<T> implements Converter<T, T> {
+    /**
+     * Public setter for the {@link SqlSessionTemplate}.
+     *
+     * @param sqlSessionTemplate
+     *          a template object for use the {@link SqlSession} on the Spring managed transaction
+     */
+    public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Public setter for the statement id identifying the statement in the SqlMap configuration file.
+     *
+     * @param statementId
+     *          the id for the statement
+     */
+    public void setStatementId(String statementId) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Public setter for a converter that converting item to parameter object.
+     * <p>
+     * By default implementation, an item does not convert.
+     *
+     * @param itemToParameterConverter
+     *          a converter that converting item to parameter object
+     *
+     * @since 2.0.0
+     */
+    public void setItemToParameterConverter(Converter<T, ?> itemToParameterConverter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Check mandatory properties - there must be an SqlSession and a statementId.
+     */
+    @Override
+    public void afterPropertiesSet() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
     @Override
-    public T convert(T source) {
-      return source;
+    public void write(final Chunk<? extends T> items) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-  }
+    private static class PassThroughConverter<T> implements Converter<T, T> {
 
+        @Override
+        public T convert(T source) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+    }
 }

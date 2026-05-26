@@ -28,9 +28,8 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
  */
 public class NamespaceHandler extends NamespaceHandlerSupport {
 
-  @Override
-  public void init() {
-    registerBeanDefinitionParser("scan", new MapperScannerBeanDefinitionParser());
-  }
-
+    @Override
+    public void init() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

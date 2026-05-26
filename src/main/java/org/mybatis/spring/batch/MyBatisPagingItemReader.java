@@ -17,13 +17,11 @@ package org.mybatis.spring.batch;
 
 import static org.springframework.util.Assert.notNull;
 import static org.springframework.util.ClassUtils.getShortName;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -45,96 +43,77 @@ import org.springframework.batch.infrastructure.item.database.AbstractPagingItem
  */
 public class MyBatisPagingItemReader<T> extends AbstractPagingItemReader<T> {
 
-  private String queryId;
+    private String queryId;
 
-  private SqlSessionFactory sqlSessionFactory;
+    private SqlSessionFactory sqlSessionFactory;
 
-  private SqlSessionTemplate sqlSessionTemplate;
+    private SqlSessionTemplate sqlSessionTemplate;
 
-  private Map<String, Object> parameterValues;
+    private Map<String, Object> parameterValues;
 
-  private Supplier<Map<String, Object>> parameterValuesSupplier;
+    private Supplier<Map<String, Object>> parameterValuesSupplier;
 
-  /**
-   * Instantiates a new my batis paging item reader.
-   */
-  public MyBatisPagingItemReader() {
-    setName(getShortName(MyBatisPagingItemReader.class));
-  }
-
-  /**
-   * Public setter for {@link SqlSessionFactory} for injection purposes.
-   *
-   * @param sqlSessionFactory
-   *          a factory object for the {@link SqlSession}.
-   */
-  public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-    this.sqlSessionFactory = sqlSessionFactory;
-  }
-
-  /**
-   * Public setter for the statement id identifying the statement in the SqlMap configuration file.
-   *
-   * @param queryId
-   *          the id for the statement
-   */
-  public void setQueryId(String queryId) {
-    this.queryId = queryId;
-  }
-
-  /**
-   * The parameter values to be used for the query execution.
-   *
-   * @param parameterValues
-   *          the values keyed by the parameter named used in the query string.
-   */
-  public void setParameterValues(Map<String, Object> parameterValues) {
-    this.parameterValues = parameterValues;
-  }
-
-  /**
-   * The parameter supplier used to get parameter values for the query execution.
-   *
-   * @param parameterValuesSupplier
-   *          the supplier used to get values keyed by the parameter named used in the query string.
-   *
-   * @since 2.1.0
-   */
-  public void setParameterValuesSupplier(Supplier<Map<String, Object>> parameterValuesSupplier) {
-    this.parameterValuesSupplier = parameterValuesSupplier;
-  }
-
-  /**
-   * Check mandatory properties.
-   *
-   * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-   */
-  @Override
-  public void afterPropertiesSet() throws Exception {
-    super.afterPropertiesSet();
-    notNull(sqlSessionFactory, "A SqlSessionFactory is required.");
-    notNull(queryId, "A queryId is required.");
-  }
-
-  @Override
-  protected void doReadPage() {
-    if (sqlSessionTemplate == null) {
-      sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory, ExecutorType.BATCH);
+    /**
+     * Instantiates a new my batis paging item reader.
+     */
+    public MyBatisPagingItemReader() {
+        setName(getShortName(MyBatisPagingItemReader.class));
     }
-    Map<String, Object> parameters = new HashMap<>();
-    if (parameterValues != null) {
-      parameters.putAll(parameterValues);
-    }
-    Optional.ofNullable(parameterValuesSupplier).map(Supplier::get).ifPresent(parameters::putAll);
-    parameters.put("_page", getPage());
-    parameters.put("_pagesize", getPageSize());
-    parameters.put("_skiprows", getPage() * getPageSize());
-    if (results == null) {
-      results = new CopyOnWriteArrayList<>();
-    } else {
-      results.clear();
-    }
-    results.addAll(sqlSessionTemplate.selectList(queryId, parameters));
-  }
 
+    /**
+     * Public setter for {@link SqlSessionFactory} for injection purposes.
+     *
+     * @param sqlSessionFactory
+     *          a factory object for the {@link SqlSession}.
+     */
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Public setter for the statement id identifying the statement in the SqlMap configuration file.
+     *
+     * @param queryId
+     *          the id for the statement
+     */
+    public void setQueryId(String queryId) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * The parameter values to be used for the query execution.
+     *
+     * @param parameterValues
+     *          the values keyed by the parameter named used in the query string.
+     */
+    public void setParameterValues(Map<String, Object> parameterValues) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * The parameter supplier used to get parameter values for the query execution.
+     *
+     * @param parameterValuesSupplier
+     *          the supplier used to get values keyed by the parameter named used in the query string.
+     *
+     * @since 2.1.0
+     */
+    public void setParameterValuesSupplier(Supplier<Map<String, Object>> parameterValuesSupplier) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Check mandatory properties.
+     *
+     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+     */
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Override
+    protected void doReadPage() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

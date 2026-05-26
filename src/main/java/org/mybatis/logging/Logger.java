@@ -16,7 +16,6 @@
 package org.mybatis.logging;
 
 import java.util.function.Supplier;
-
 import org.apache.commons.logging.Log;
 
 /**
@@ -26,73 +25,70 @@ import org.apache.commons.logging.Log;
  */
 public class Logger {
 
-  /** The log. */
-  private final Log log;
+    /**
+     * The log.
+     */
+    private final Log log;
 
-  /**
-   * Instantiates a new logger.
-   *
-   * @param log
-   *          the log
-   */
-  Logger(Log log) {
-    this.log = log;
-  }
-
-  /**
-   * Error.
-   *
-   * @param s
-   *          the s
-   * @param e
-   *          the e
-   */
-  public void error(Supplier<String> s, Throwable e) {
-    log.error(s.get(), e);
-  }
-
-  /**
-   * Error.
-   *
-   * @param s
-   *          the s
-   */
-  public void error(Supplier<String> s) {
-    log.error(s.get());
-  }
-
-  /**
-   * Warn.
-   *
-   * @param s
-   *          the s
-   */
-  public void warn(Supplier<String> s) {
-    log.warn(s.get());
-  }
-
-  /**
-   * Debug.
-   *
-   * @param s
-   *          the s
-   */
-  public void debug(Supplier<String> s) {
-    if (log.isDebugEnabled()) {
-      log.debug(s.get());
+    /**
+     * Instantiates a new logger.
+     *
+     * @param log
+     *          the log
+     */
+    Logger(Log log) {
+        this.log = log;
     }
-  }
 
-  /**
-   * Trace.
-   *
-   * @param s
-   *          the s
-   */
-  public void trace(Supplier<String> s) {
-    if (log.isTraceEnabled()) {
-      log.trace(s.get());
+    /**
+     * Error.
+     *
+     * @param s
+     *          the s
+     * @param e
+     *          the e
+     */
+    public void error(Supplier<String> s, Throwable e) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-  }
 
+    /**
+     * Error.
+     *
+     * @param s
+     *          the s
+     */
+    public void error(Supplier<String> s) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Warn.
+     *
+     * @param s
+     *          the s
+     */
+    public void warn(Supplier<String> s) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Debug.
+     *
+     * @param s
+     *          the s
+     */
+    public void debug(Supplier<String> s) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * Trace.
+     *
+     * @param s
+     *          the s
+     */
+    public void trace(Supplier<String> s) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

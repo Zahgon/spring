@@ -17,13 +17,11 @@ package org.mybatis.spring.batch;
 
 import static org.springframework.util.Assert.notNull;
 import static org.springframework.util.ClassUtils.getShortName;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
-
 import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
@@ -39,111 +37,93 @@ import org.springframework.beans.factory.InitializingBean;
  * @param <T>
  *          the generic type
  */
-public class MyBatisCursorItemReader<T> extends AbstractItemCountingItemStreamItemReader<T>
-    implements InitializingBean {
+public class MyBatisCursorItemReader<T> extends AbstractItemCountingItemStreamItemReader<T> implements InitializingBean {
 
-  private String queryId;
+    private String queryId;
 
-  private SqlSessionFactory sqlSessionFactory;
-  private SqlSession sqlSession;
+    private SqlSessionFactory sqlSessionFactory;
 
-  private Map<String, Object> parameterValues;
-  private Supplier<Map<String, Object>> parameterValuesSupplier;
+    private SqlSession sqlSession;
 
-  private Cursor<T> cursor;
-  private Iterator<T> cursorIterator;
+    private Map<String, Object> parameterValues;
 
-  /**
-   * Instantiates a new my batis cursor item reader.
-   */
-  public MyBatisCursorItemReader() {
-    setName(getShortName(MyBatisCursorItemReader.class));
-  }
+    private Supplier<Map<String, Object>> parameterValuesSupplier;
 
-  @Override
-  protected T doRead() throws Exception {
-    T next = null;
-    if (cursorIterator.hasNext()) {
-      next = cursorIterator.next();
-    }
-    return next;
-  }
+    private Cursor<T> cursor;
 
-  @Override
-  protected void doOpen() throws Exception {
-    Map<String, Object> parameters = new HashMap<>();
-    if (parameterValues != null) {
-      parameters.putAll(parameterValues);
+    private Iterator<T> cursorIterator;
+
+    /**
+     * Instantiates a new my batis cursor item reader.
+     */
+    public MyBatisCursorItemReader() {
+        setName(getShortName(MyBatisCursorItemReader.class));
     }
 
-    Optional.ofNullable(parameterValuesSupplier).map(Supplier::get).ifPresent(parameters::putAll);
-
-    sqlSession = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
-    cursor = sqlSession.selectCursor(queryId, parameters);
-    cursorIterator = cursor.iterator();
-  }
-
-  @Override
-  protected void doClose() throws Exception {
-    if (cursor != null) {
-      cursor.close();
+    @Override
+    protected T doRead() throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-    if (sqlSession != null) {
-      sqlSession.close();
+
+    @Override
+    protected void doOpen() throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-    cursorIterator = null;
-  }
 
-  /**
-   * Check mandatory properties.
-   *
-   * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-   */
-  @Override
-  public void afterPropertiesSet() throws Exception {
-    notNull(sqlSessionFactory, "A SqlSessionFactory is required.");
-    notNull(queryId, "A queryId is required.");
-  }
+    @Override
+    protected void doClose() throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * Public setter for {@link SqlSessionFactory} for injection purposes.
-   *
-   * @param sqlSessionFactory
-   *          a factory object for the {@link SqlSession}.
-   */
-  public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-    this.sqlSessionFactory = sqlSessionFactory;
-  }
+    /**
+     * Check mandatory properties.
+     *
+     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+     */
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * Public setter for the statement id identifying the statement in the SqlMap configuration file.
-   *
-   * @param queryId
-   *          the id for the statement
-   */
-  public void setQueryId(String queryId) {
-    this.queryId = queryId;
-  }
+    /**
+     * Public setter for {@link SqlSessionFactory} for injection purposes.
+     *
+     * @param sqlSessionFactory
+     *          a factory object for the {@link SqlSession}.
+     */
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * The parameter values to be used for the query execution.
-   *
-   * @param parameterValues
-   *          the values keyed by the parameter named used in the query string.
-   */
-  public void setParameterValues(Map<String, Object> parameterValues) {
-    this.parameterValues = parameterValues;
-  }
+    /**
+     * Public setter for the statement id identifying the statement in the SqlMap configuration file.
+     *
+     * @param queryId
+     *          the id for the statement
+     */
+    public void setQueryId(String queryId) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * The parameter supplier used to get parameter values for the query execution.
-   *
-   * @param parameterValuesSupplier
-   *          the supplier used to get values keyed by the parameter named used in the query string.
-   *
-   * @since 2.1.0
-   */
-  public void setParameterValuesSupplier(Supplier<Map<String, Object>> parameterValuesSupplier) {
-    this.parameterValuesSupplier = parameterValuesSupplier;
-  }
+    /**
+     * The parameter values to be used for the query execution.
+     *
+     * @param parameterValues
+     *          the values keyed by the parameter named used in the query string.
+     */
+    public void setParameterValues(Map<String, Object> parameterValues) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /**
+     * The parameter supplier used to get parameter values for the query execution.
+     *
+     * @param parameterValuesSupplier
+     *          the supplier used to get values keyed by the parameter named used in the query string.
+     *
+     * @since 2.1.0
+     */
+    public void setParameterValuesSupplier(Supplier<Map<String, Object>> parameterValuesSupplier) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

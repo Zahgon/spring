@@ -16,12 +16,9 @@
 package org.mybatis.spring.transaction;
 
 import static org.springframework.util.Assert.notNull;
-
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import javax.sql.DataSource;
-
 import org.apache.ibatis.transaction.Transaction;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
@@ -43,82 +40,64 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  */
 public class SpringManagedTransaction implements Transaction {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SpringManagedTransaction.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringManagedTransaction.class);
 
-  private final DataSource dataSource;
+    private final DataSource dataSource;
 
-  private Connection connection;
+    private Connection connection;
 
-  private boolean isConnectionTransactional;
+    private boolean isConnectionTransactional;
 
-  private boolean autoCommit;
+    private boolean autoCommit;
 
-  /**
-   * Instantiates a new spring managed transaction.
-   *
-   * @param dataSource
-   *          the data source
-   */
-  public SpringManagedTransaction(DataSource dataSource) {
-    notNull(dataSource, "No DataSource specified");
-    this.dataSource = dataSource;
-  }
-
-  @Override
-  public Connection getConnection() throws SQLException {
-    if (this.connection == null) {
-      openConnection();
+    /**
+     * Instantiates a new spring managed transaction.
+     *
+     * @param dataSource
+     *          the data source
+     */
+    public SpringManagedTransaction(DataSource dataSource) {
+        notNull(dataSource, "No DataSource specified");
+        this.dataSource = dataSource;
     }
-    return this.connection;
-  }
 
-  /**
-   * Gets a connection from Spring transaction manager and discovers if this {@code Transaction} should manage
-   * connection or let it to Spring.
-   * <p>
-   * It also reads autocommit setting because when using Spring Transaction MyBatis thinks that autocommit is always
-   * false and will always call commit/rollback so we need to no-op that calls.
-   */
-  private void openConnection() throws SQLException {
-    this.connection = DataSourceUtils.getConnection(this.dataSource);
-    this.autoCommit = this.connection.getAutoCommit();
-
-    boolean isInActiveTransaction = TransactionSynchronizationManager.isActualTransactionActive();
-    this.isConnectionTransactional = isInActiveTransaction &&
-      DataSourceUtils.isConnectionTransactional(this.connection, this.dataSource);
-
-    LOGGER.debug(() -> "JDBC Connection [" + this.connection + "] will"
-      + (this.isConnectionTransactional ? " " : " not ") + "be managed by Spring");
-  }
-
-  @Override
-  public void commit() throws SQLException {
-    if (this.connection != null && !this.isConnectionTransactional && !this.autoCommit) {
-      LOGGER.debug(() -> "Committing JDBC Connection [" + this.connection + "]");
-      this.connection.commit();
+    @Override
+    public Connection getConnection() throws SQLException {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-  }
 
-  @Override
-  public void rollback() throws SQLException {
-    if (this.connection != null && !this.isConnectionTransactional && !this.autoCommit) {
-      LOGGER.debug(() -> "Rolling back JDBC Connection [" + this.connection + "]");
-      this.connection.rollback();
+    /**
+     * Gets a connection from Spring transaction manager and discovers if this {@code Transaction} should manage
+     * connection or let it to Spring.
+     * <p>
+     * It also reads autocommit setting because when using Spring Transaction MyBatis thinks that autocommit is always
+     * false and will always call commit/rollback so we need to no-op that calls.
+     */
+    private void openConnection() throws SQLException {
+        this.connection = DataSourceUtils.getConnection(this.dataSource);
+        this.autoCommit = this.connection.getAutoCommit();
+        boolean isInActiveTransaction = TransactionSynchronizationManager.isActualTransactionActive();
+        this.isConnectionTransactional = isInActiveTransaction && DataSourceUtils.isConnectionTransactional(this.connection, this.dataSource);
+        LOGGER.debug(() -> "JDBC Connection [" + this.connection + "] will" + (this.isConnectionTransactional ? " " : " not ") + "be managed by Spring");
     }
-  }
 
-  @Override
-  public void close() throws SQLException {
-    DataSourceUtils.releaseConnection(this.connection, this.dataSource);
-  }
-
-  @Override
-  public Integer getTimeout() throws SQLException {
-    var holder = (ConnectionHolder) TransactionSynchronizationManager.getResource(dataSource);
-    if (holder != null && holder.hasTimeout()) {
-      return holder.getTimeToLiveInSeconds();
+    @Override
+    public void commit() throws SQLException {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-    return null;
-  }
 
+    @Override
+    public void rollback() throws SQLException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Override
+    public void close() throws SQLException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Override
+    public Integer getTimeout() throws SQLException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

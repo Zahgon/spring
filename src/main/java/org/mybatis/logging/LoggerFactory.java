@@ -24,35 +24,34 @@ import org.apache.commons.logging.LogFactory;
  */
 public class LoggerFactory {
 
-  /**
-   * Instantiates a new logger factory.
-   */
-  private LoggerFactory() {
-    // NOP
-  }
+    /**
+     * Instantiates a new logger factory.
+     */
+    private LoggerFactory() {
+        // NOP
+    }
 
-  /**
-   * Gets the logger.
-   *
-   * @param aClass
-   *          the a class
-   *
-   * @return the logger
-   */
-  public static Logger getLogger(Class<?> aClass) {
-    return new Logger(LogFactory.getLog(aClass));
-  }
+    /**
+     * Gets the logger.
+     *
+     * @param aClass
+     *          the a class
+     *
+     * @return the logger
+     */
+    public static Logger getLogger(Class<?> aClass) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  /**
-   * Gets the logger.
-   *
-   * @param logger
-   *          the logger
-   *
-   * @return the logger
-   */
-  public static Logger getLogger(String logger) {
-    return new Logger(LogFactory.getLog(logger));
-  }
-
+    /**
+     * Gets the logger.
+     *
+     * @param logger
+     *          the logger
+     *
+     * @return the logger
+     */
+    public static Logger getLogger(String logger) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

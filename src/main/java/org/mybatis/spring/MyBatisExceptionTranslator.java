@@ -18,9 +18,7 @@ package org.mybatis.spring;
 import java.sql.SQLException;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
-
 import javax.sql.DataSource;
-
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
@@ -40,81 +38,59 @@ import org.springframework.transaction.TransactionException;
  */
 public class MyBatisExceptionTranslator implements PersistenceExceptionTranslator {
 
-  private final Supplier<SQLExceptionTranslator> exceptionTranslatorSupplier;
-  private SQLExceptionTranslator exceptionTranslator;
-  private ReentrantLock lock = new ReentrantLock();
+    private final Supplier<SQLExceptionTranslator> exceptionTranslatorSupplier;
 
-  /**
-   * Creates a new {@code PersistenceExceptionTranslator} instance with {@code SQLErrorCodeSQLExceptionTranslator}.
-   *
-   * @param dataSource
-   *          DataSource to use to find metadata and establish which error codes are usable.
-   * @param exceptionTranslatorLazyInit
-   *          if true, the translator instantiates internal stuff only the first time will have the need to translate
-   *          exceptions.
-   */
-  public MyBatisExceptionTranslator(DataSource dataSource, boolean exceptionTranslatorLazyInit) {
-    this(() -> new SQLErrorCodeSQLExceptionTranslator(dataSource), exceptionTranslatorLazyInit);
-  }
+    private SQLExceptionTranslator exceptionTranslator;
 
-  /**
-   * Creates a new {@code PersistenceExceptionTranslator} instance with specified {@code SQLExceptionTranslator}.
-   *
-   * @param exceptionTranslatorSupplier
-   *          Supplier for creating a {@code SQLExceptionTranslator} instance
-   * @param exceptionTranslatorLazyInit
-   *          if true, the translator instantiates internal stuff only the first time will have the need to translate
-   *          exceptions.
-   *
-   * @since 2.0.3
-   */
-  public MyBatisExceptionTranslator(Supplier<SQLExceptionTranslator> exceptionTranslatorSupplier,
-      boolean exceptionTranslatorLazyInit) {
-    this.exceptionTranslatorSupplier = exceptionTranslatorSupplier;
-    if (!exceptionTranslatorLazyInit) {
-      this.initExceptionTranslator();
+    private ReentrantLock lock = new ReentrantLock();
+
+    /**
+     * Creates a new {@code PersistenceExceptionTranslator} instance with {@code SQLErrorCodeSQLExceptionTranslator}.
+     *
+     * @param dataSource
+     *          DataSource to use to find metadata and establish which error codes are usable.
+     * @param exceptionTranslatorLazyInit
+     *          if true, the translator instantiates internal stuff only the first time will have the need to translate
+     *          exceptions.
+     */
+    public MyBatisExceptionTranslator(DataSource dataSource, boolean exceptionTranslatorLazyInit) {
+        this(() -> new SQLErrorCodeSQLExceptionTranslator(dataSource), exceptionTranslatorLazyInit);
     }
-  }
 
-  @Override
-  public DataAccessException translateExceptionIfPossible(RuntimeException e) {
-    if (e instanceof PersistenceException) {
-      // Batch exceptions come inside another PersistenceException
-      // recursion has a risk of infinite loop so better make another if
-      var msg = e.getMessage();
-      if (e.getCause() instanceof PersistenceException) {
-        e = (PersistenceException) e.getCause();
-        if (msg == null) {
-          msg = e.getMessage();
+    /**
+     * Creates a new {@code PersistenceExceptionTranslator} instance with specified {@code SQLExceptionTranslator}.
+     *
+     * @param exceptionTranslatorSupplier
+     *          Supplier for creating a {@code SQLExceptionTranslator} instance
+     * @param exceptionTranslatorLazyInit
+     *          if true, the translator instantiates internal stuff only the first time will have the need to translate
+     *          exceptions.
+     *
+     * @since 2.0.3
+     */
+    public MyBatisExceptionTranslator(Supplier<SQLExceptionTranslator> exceptionTranslatorSupplier, boolean exceptionTranslatorLazyInit) {
+        this.exceptionTranslatorSupplier = exceptionTranslatorSupplier;
+        if (!exceptionTranslatorLazyInit) {
+            this.initExceptionTranslator();
         }
-      }
-      if (e.getCause() instanceof SQLException) {
-        this.initExceptionTranslator();
-        var task = e.getMessage() + "\n";
-        var se = (SQLException) e.getCause();
-        var dae = this.exceptionTranslator.translate(task, null, se);
-        return dae != null ? dae : new UncategorizedSQLException(task, null, se);
-      }
-      if (e.getCause() instanceof TransactionException) {
-        throw (TransactionException) e.getCause();
-      }
-      return new MyBatisSystemException(msg, e);
     }
-    return null;
-  }
 
-  /**
-   * Initializes the internal translator reference.
-   */
-  private void initExceptionTranslator() {
-    lock.lock();
-    try {
-      if (this.exceptionTranslator == null) {
-        this.exceptionTranslator = exceptionTranslatorSupplier.get();
-      }
-    } finally {
-      lock.unlock();
+    @Override
+    public DataAccessException translateExceptionIfPossible(RuntimeException e) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-  }
 
+    /**
+     * Initializes the internal translator reference.
+     */
+    private void initExceptionTranslator() {
+        lock.lock();
+        try {
+            if (this.exceptionTranslator == null) {
+                this.exceptionTranslator = exceptionTranslatorSupplier.get();
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
 }
